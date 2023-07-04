@@ -1,4 +1,3 @@
-import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import re
@@ -59,20 +58,27 @@ def vfile_to_one_hot(file_path,positive=True):
     return torch.from_numpy(np.array(features)),torch.from_numpy(np.array(labels))
 
 
-#uninverton_dataset
-file_path="../data/inverton_sequence.txt"
-features_train,labels_train=vfile_to_one_hot(file_path,positive=True)
-#inverton_dataset
-# positive_file_path='/data4/wenjiejie/Graduation_Project/add_data/model/data/extend/remove_extend2/extend_inverton.txt'
-# features2_train,labels2_train=vfile_to_one_hot(positive_file_path,positive=True)
+#train_inverton_dataset
+positive_file_path="../data/train_inverton_sequence.txt"
+features_train,labels_train=vfile_to_one_hot(positive_file_path,positive=True)
+torch.save(features_train,r'../data/positve_train_features.pt')
+torch.save(labels_train,r'../data/positive_train_labels.pt')
 
-# train_features=torch.cat((features_train,features2_train),dim=0).to(torch.float32)
-# train_labels=torch.cat((labels_train,labels2_train),dim=0).long()
-end=time.time()
-print(end-start)
-torch.save(features_train,r'/data4/wenjiejie/Graduation_Project/add_data/analysis/extend_data/extend_inverton/true_train_features.pt')
-torch.save(labels_train,r'/data4/wenjiejie/Graduation_Project/add_data/analysis/extend_data/extend_inverton/true_train_labels.pt')
+#train_noninverton_dataset
+negative_file_path="../data/train_noninverton_sequence.txt"
+features_train,labels_train=vfile_to_one_hot(negative_file_path,positive=False)
+torch.save(features_train,r'../data/negative_train_features.pt')
+torch.save(labels_train,r'../data/negative_train_labels.pt')
 
-# torch.save(features2_train,r'/data4/wenjiejie/Graduation_Project/add_data/model/data/extend/remove_extend2/true_train_features.pt')
-# torch.save(labels2_train,r'/data4/wenjiejie/Graduation_Project/add_data/model/data/extend/remove_extend2/true_train_labels.pt')
+#external_validation_inverton_dataset
+positive_file_path="../data/inverton_external_validation_sequence.txt"
+features_train,labels_train=vfile_to_one_hot(positive_file_path,positive=True)
+torch.save(features_train,r'../data/positve_external_validation_features.pt')
+torch.save(labels_train,r'../data/positive_external_validation_labels.pt')
+
+#external_validation_noninverton_dataset
+negative_file_path="../data/noninverton_external_validation_sequence.txt"
+features_train,labels_train=vfile_to_one_hot(negative_file_path,positive=False)
+torch.save(features_train,r'../data/negative_external_validation_features.pt')
+torch.save(labels_train,r'../data/negative_external_validation_labels.pt')
 
