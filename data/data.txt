@@ -1,6 +1,0 @@
-1. training_data_feature
-2. tests_data_feature
-3. external_validation_data_feature
-4. training_data_label
-5. tests_data_label
-6. external_validation_data_label
