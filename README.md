@@ -1,30 +1,69 @@
 # DeepInverton
 ## Introduction
 The DeepInverton is a deep learning framework to identify a inverton with nucleotide sequence.
-![DeepInverton](https://img-blog.csdnimg.cn/2972dda365974ff8aed36cdf1e4a784a.png#pic_center)
-
+![DeepInverton](https://img-blog.csdnimg.cn/34e3b76064cd4ea0b9a2fd152f825b96.png#pic_center)
 ## Installation
-
+We recommend deploying DeepInverton using `conda`
 ```
 # clone this repository
 git clone https://github.com/HUST-NingKang-Lab/DeepInverton.git
 cd DeepInverton
-
-# configure environment using environment.yaml
-conda install mamba -n base -c conda-forge -y
-mamba env create -f environment.yml
-conda activate DeepInverton
+# configure environment using environment.yml
+conda env create -f environment.yml
+# activate the environment
+conda activate deepinverton
 ```
 ## Usage
-- Run search and indentify for assembled contigs or genomics
+ Perform a search and identification of nucleotide sequences, including assembled contigs, genomics or single sequences.
+```
+python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result -m /deepinverton/model/DeepInverton.pth -x genomic
+```
+## Parameters deepInverton.py
 
-```
-DeepInverton.py -m
-```
-- Run search and indentify for small sequence shorter than 300 nts
+ - `-f  --fasta`
+ 	input nucleotide sequence file in fasta format 	
+ -  `-o  --outdir`
+  where output files should be written. default is current working directory.
+ -  `-x  --prefix`
+ 	base name for output files
+ -  `-d   --model`
+    the path of DeepInverton model
+ -  `-e   --einv`
+ 	einverted parameters, if unspecified run with DeepInverton default pipeline
+ -  `-m  --mismatch`
+ 	max number of mismatches allowed between IR pairs, used with `-einv` (default:3)
+ -  `-r  --IRsize`
+ 	max size of the inverted repeats, used with `-einv` (default:50)
+ -  `-g  --gcrange`
+  the minimum and maximum value of GC ratio
+ -  `-p  --polymer`
+ 	Eliminate homopolymer inverted repeats
+## Result file
+The DeepInverton program will generate three output files, including prefix_ir.txt, prefix_inverton.txt and prefix_ir_possibility.txt.
 
-```
-DeePInverton.py -m
-```
-## Parameters DeepInverton.py
-### Input Data Options
+| filename        | description          |
+|:-----------:| :-------------:|
+| prefix_ir.txt | output table with inverted repeats coordinates |
+|prefix_inverton.txt| output table with invertons coordinates |
+|prefix_ir_possibility.txt| output table with inverted repeats possibility of invertons |
+
+ - prefix_ir.txt, prefix_inverton.txt
+
+ | Column name | Explanation                                                   |
+|-------------|---------------------------------------------------------------|
+ Scaffold    | The sequence name where the inverted repeat is detected
+ pos A       | The start coordinate of the first inverted repeat (0-based)
+ pos B       | The end coordinate of the first inverted repeat (1-based)
+ pos C       | The start coordinate of the second inverted repeat (0-based)
+ pos D       | The end coordinate of the second inverted repeat (1-based)
+ IR A       | The sequence of the first inverted repeat
+Mid       | The sequence of the invertible promoter
+  IR B       | The sequence of the second inverted repeat 
+
+- prefix_ir_possibility.txt
+
+ | Column name | Explanation                                                   |
+|-------------|---------------------------------------------------------------|
+ ID    | The sequence name of inverted repeat combined with Scaffold, pos A, pos B, pos C and pos D.
+positive       | The  inverton possibility of the inverted repeat 
+negative       | The non-inverton possibility of the inverted repeat 
