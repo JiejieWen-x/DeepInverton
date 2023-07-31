@@ -64,6 +64,6 @@ Mid       | The sequence of the invertible promoter
 
  | Column name | Explanation                                                   |
 |-------------|---------------------------------------------------------------|
- ID    | The sequence name of inverted repeat combined with Scaffold, pos A, pos B, pos C and pos D.
+    ID    | The sequence name of inverted repeat combined with Scaffold, pos A, pos B, pos C and pos D
 positive       | The  inverton possibility of the inverted repeat 
 negative       | The non-inverton possibility of the inverted repeat 
