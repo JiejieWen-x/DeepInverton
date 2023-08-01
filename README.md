@@ -1,6 +1,6 @@
 # DeepInverton
 ## Introduction
-The DeepInverton is a deep learning framework to identify a inverton with nucleotide sequence.
+The DeepInverton is a deep learning framework to identify invertons with nucleotide sequence.
 ![DeepInverton](https://img-blog.csdnimg.cn/34e3b76064cd4ea0b9a2fd152f825b96.png#pic_center)
 ## Installation
 We recommend deploying DeepInverton using `conda`
