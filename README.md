@@ -1,6 +1,6 @@
 # DeepInverton
 ## Introduction
-The DeepInverton algorithm is designed to detect DNA inversion mediated phase variation in bacterial genomes just by using nucleotide sequence. It works by identifying regions flanked by inverted repeats and identifying regions using the DeepInverton model. DeepInverton should be valuable to the research community, as it enables researchers to effectively identify a list of candidate invertons from massive data and provide good targets for further exploration of invertons.
+The DeepInverton algorithm is designed to detect DNA inversion mediated phase variation in bacterial genomes just using nucleotide sequence. It works by identifying regions flanked by inverted repeats and identifying regions using the DeepInverton model. DeepInverton should be valuable to the research community, as it enables researchers to effectively identify a list of candidate invertons from massive data, provide good targets for further exploration of invertons.
 ![DeepInverton](https://img-blog.csdnimg.cn/34e3b76064cd4ea0b9a2fd152f825b96.png#pic_center)
 ## Installation
 We recommend deploying DeepInverton using `conda`
@@ -16,8 +16,20 @@ conda activate deepinverton
 ## Usage
  Perform a search and identification of nucleotide sequences, including assembled contigs, genomics or single sequences.
 ```
-python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result -m /deepinverton/model/DeepInverton.pth -x genomic
+python deepinverton.py -f input_sequence.fna -o result_dir_path -m /deepinverton/model/DeepInverton.pth -x prefix_filename  -g 15 85 -p
 ```
+## Quick Start
+All you need to get started just are nucleotide sequences (in fasta format). Then, you can search for the invertons using DeepInverton.
+
+To test DeepInverton, you can use the example files (genomic.txt)
+
+example:
+```
+python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result -m /deepinverton/model/DeepInverton.pth -x genomic  -g 15 85 -p
+```
+If successful, the output will be in /deepinverton/expample/result/ with three files, including genomic_ir.txt, genomic_inverton.txt and genomic_ir_possibility.txt.
+
+
 ## Parameters deepInverton.py
 
  - `-f  --fasta`
