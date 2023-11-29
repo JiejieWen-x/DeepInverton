@@ -25,7 +25,7 @@ To test DeepInverton, you can use the example files (genomic.txt)
 
 example:
 ```
-python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result -m /deepinverton/model/DeepInverton.pth -x genomic  -g 15 85 -p
+python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result --model /deepinverton/model/DeepInverton.pth -x genomic  -g 15 85 -p
 ```
 If successful, the output will be in /deepinverton/expample/result/ with three files, including genomic_ir.txt, genomic_inverton.txt and genomic_ir_possibility.txt.
 
