@@ -1,7 +1,7 @@
 # DeepInverton
 ## Introduction
 The DeepInverton algorithm is designed to detect DNA inversion mediated phase variation in bacterial genomes just using nucleotide sequence. It works by identifying regions flanked by inverted repeats and identifying regions using the DeepInverton model. DeepInverton should be valuable to the research community, as it enables researchers to effectively identify a list of candidate invertons from massive data, provide good targets for further exploration of invertons.
-![DeepInverton](https://img-blog.csdnimg.cn/34e3b76064cd4ea0b9a2fd152f825b96.png#pic_center)
+![DeepInverton](https://img-blog.csdnimg.cn/direct/ca0e9488674f463283ad183c5d4a14c3.png#pic_center)
 ## Installation
 We recommend deploying DeepInverton using `conda`
 ```
