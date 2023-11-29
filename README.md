@@ -16,7 +16,7 @@ conda activate deepinverton
 ## Usage
  Perform a search and identification of nucleotide sequences, including assembled contigs, genomics or single sequences.
 ```
-python deepinverton.py -f input_sequence.fna -o result_dir_path -m /deepinverton/model/DeepInverton.pth -x prefix_filename  -g 15 85 -p
+python deepinverton.py -f input_sequence.fna -o result_dir_path --model /deepinverton/model/DeepInverton.pth -x prefix_filename  -g 15 85 -p
 ```
 ## Quick Start
 All you need to get started just are nucleotide sequences (in fasta format). Then, you can search for the invertons using DeepInverton.
