@@ -49,9 +49,7 @@ def inverton_search(tab_path, inverton_path,model_path,inverton_possibility_path
             a=list(np.array(output).flatten())
             posibility.append(a)
             id.append(tab.iloc[i,0]+'-'+str(tab.iloc[i,1])+'-'+str(tab.iloc[i,2])+'-'+str(tab.iloc[i,3])+'-'+str(tab.iloc[i,4]))
-            # if output[0,1].item()>0.01 and output[0,0].item()>0.01:
-            #     continue
-            if prediction == 1 and math.log10(output[0,1].item()/output[0,0].item())>3:
+            if prediction == 1 and math.log10(output[0,1].item()/output[0,0].item())>15:
                 inverton = pd.concat([inverton,tab.iloc[[i]]])
     c=np.array(posibility)
     inverton.to_csv(inverton_path, sep='\t', index=False, header=False)
@@ -162,12 +160,15 @@ def deepinverton_finder(args):
             print ("\t".join(each_line)+"\t"+left_seq.seq + \
                 "\t"+mid_seq.seq+"\t" + right_seq.seq ,file=outfile)
     os.remove(tmpout + ".pos.tab")
-   
-    print("Now is dentifying invertons")
     
-    inverton_path=os.path.join(args.result_dirpath,prefix+'_inverton.txt')
-    inverton_possibility_path=os.path.join(args.result_dirpath,prefix+'_ir_possibility.txt')
-    model_path=args.model_path
+def deepinverton_invertonfider(prefix,result_dirpath,model_path):
+    print("Now is dentifying invertons")
+    prefix = prefix
+    irfile = os.path.join(result_dirpath,prefix+'.txt')
+    inverton_path=os.path.join(result_dirpath,prefix+'_inverton.txt')
+    inverton_possibility_path=os.path.join(result_dirpath,prefix+'_ir_possibility.txt')
+    model_path=model_path
+    print(irfile)
     inverton_search(irfile, inverton_path,model_path,inverton_possibility_path)
 
 def is_tool(name):
@@ -248,8 +249,8 @@ if __name__ == "__main__":
         required=True,
         dest='result_dirpath'
     )
-    parser.set_defaults(func=deepinverton_finder)
-    #parser.set_defaults(func=inverton_finder)
+    parser.set_defaults(func=deepinverton_irfinder)
+
 
     if not is_tool("einverted"):
         print("tool {i} is not installed".format(i="einverted"))
@@ -269,4 +270,5 @@ if __name__ == "__main__":
                     "The range should be between 0 and 100 and minimal value should be bigger than maximal"
                 )
     args.func(args)
+    deepinverton_invertonfider(args.prefix,args.result_dirpath,args.model_path)
 
