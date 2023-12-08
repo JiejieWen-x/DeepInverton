@@ -8,7 +8,7 @@ We recommend deploying DeepInverton using `conda`
 # clone this repository
 git clone https://github.com/HUST-NingKang-Lab/DeepInverton.git
 cd DeepInverton
-# configure environment using environment.yml
+# configure environment using environment.yml (Time consumption of ~6s)
 conda env create -f environment.yml
 # activate the environment
 conda activate deepinverton
@@ -27,7 +27,7 @@ example:
 ```
 python deepinverton.py -f /deepinverton/example/genomic.fna -o /deepinverton/example/result --model /deepinverton/model/DeepInverton.pth -x genomic  -g 15 85 -p
 ```
-If successful, the output will be in /deepinverton/expample/result/ with three files, including genomic_ir.txt, genomic_inverton.txt and genomic_ir_possibility.txt.
+If successful, the output will be in /deepinverton/expample/result/ with three files, including genomic_ir.txt, genomic_inverton.txt and genomic_ir_possibility.txt.(Time consumption of ~4min)
 
 
 ## Parameters deepInverton.py
