@@ -32,13 +32,16 @@ def one_hot(sequence):
     return torch.from_numpy(sequence_matrix.reshape(300,5)).to(torch.float32)
 
 def inverton_search(tab_path, inverton_path,model_path,inverton_possibility_path):
-    tab = pd.read_table(tab_path, header=None)
+    if os.path.getsize(tab_path)==0:
+        print("#### The ir file is empty! ####") 
+    tab = pd.read_table(tab_path)
     model=torch.load(model_path)      
     inverton = pd.DataFrame()
     posibility=[]
     id=[]
     for i in range(len(tab)):
-        sequence=tab.iloc[i,5]+tab.iloc[i,6]+tab.iloc[i,7]
+        sequence=tab.iloc[i,6]+tab.iloc[i,7]+tab.iloc[i,8]
+        
         if len(sequence) <= 300:
             b=one_hot(sequence)
             b=b.view(-1,1500)
@@ -48,21 +51,22 @@ def inverton_search(tab_path, inverton_path,model_path,inverton_possibility_path
             prediction = prediction.numpy()[0]
             a=list(np.array(output).flatten())
             posibility.append(a)
-            id.append(tab.iloc[i,0]+'-'+str(tab.iloc[i,1])+'-'+str(tab.iloc[i,2])+'-'+str(tab.iloc[i,3])+'-'+str(tab.iloc[i,4]))
-            if prediction == 1 and math.log10(output[0,1].item()/output[0,0].item())>15:
+            id.append(tab.iloc[i,0])
+            if prediction == 1 and :
                 inverton = pd.concat([inverton,tab.iloc[[i]]])
     c=np.array(posibility)
+    inverton.rename(columns={0:"ID",1:"Scaffold",2:"PosA",3:"PosB",4:"PosC",5:"PosD",6:"IrA",7:"Mid",8:"IrB"})
     inverton.to_csv(inverton_path, sep='\t', index=False, header=False)
     result=pd.DataFrame({'ID':id,"positive":c[:,1],"negative":c[:,0]})
     result_path=inverton_possibility_path
     result.to_csv(result_path,sep='\t', index=False)
 
-def deepinverton_finder(args):
+def deepinverton_irfinder(args):
     reffile = args.reffile
     prefix = args.prefix
     if os.path.exists(args.result_dirpath) is False:
         os.mkdir(args.result_dirpath)
-    irfile = os.path.join(args.result_dirpath,prefix+'.txt')
+    irfile = os.path.join(args.result_dirpath,prefix+'_ir.txt')
     if args.gcrange is not None:
         mingc = args.gcrange[0]
         maxgc = args.gcrange[1]
@@ -75,7 +79,7 @@ def deepinverton_finder(args):
     f.close()
     if einvertedparam is None:
         # if the einverted parameter is unspecified
-        print("Now is finding inverted repeat")
+        print("#### Now is finding inverted repeat ####")
         cmd = '''
         einverted -maxrepeat 750  -gap 100 -threshold 51 -match 5 -mismatch -9 -outfile {out}.51.outfile -outseq {out}.51.outseq -sequence {ref}
         einverted -maxrepeat 750  -gap 100 -threshold 75 -match 5 -mismatch -15 -outfile {out}.75.outfile -outseq {out}.75.outseq -sequence {ref}
@@ -130,6 +134,7 @@ def deepinverton_finder(args):
     seq_dict = SeqIO.to_dict(SeqIO.parse(reffile, "fasta"))
     lines = [x.rstrip().split("\t") for x in open(tmpout + ".pos.tab")]
     outfile = open(irfile, 'w+')
+    print("ID"+"\t"+"Scaffold"+"\t"+"PosA"+"\t"+"PosB"+"\t"+"PosC"+"\t"+"PosD"+"\t"+"IrA"+"\t"+"Mid"+"\t"+"IrB",file=outfile)
     for each_line in lines:
         accept = 1
         each_seq = seq_dict[each_line[0]]
@@ -137,6 +142,9 @@ def deepinverton_finder(args):
         posB = int(each_line[2])
         posC = int(each_line[3])
         posD = int(each_line[4])
+        each_ID='-'.join(each_line)
+        each_line.insert(0,each_ID)
+        
 
         left_seq = each_seq[posA:posB]
         right_seq = each_seq[posC:posD]
@@ -162,13 +170,12 @@ def deepinverton_finder(args):
     os.remove(tmpout + ".pos.tab")
     
 def deepinverton_invertonfider(prefix,result_dirpath,model_path):
-    print("Now is dentifying invertons")
+    print("#### Now is dentifying invertons ####")
     prefix = prefix
-    irfile = os.path.join(result_dirpath,prefix+'.txt')
+    irfile = os.path.join(result_dirpath,prefix+'_ir.txt')
     inverton_path=os.path.join(result_dirpath,prefix+'_inverton.txt')
     inverton_possibility_path=os.path.join(result_dirpath,prefix+'_ir_possibility.txt')
     model_path=model_path
-    print(irfile)
     inverton_search(irfile, inverton_path,model_path,inverton_possibility_path)
 
 def is_tool(name):
