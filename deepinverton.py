@@ -52,7 +52,7 @@ def inverton_search(tab_path, inverton_path,model_path,inverton_possibility_path
             a=list(np.array(output).flatten())
             posibility.append(a)
             id.append(tab.iloc[i,0])
-            if prediction == 1 and :
+            if prediction == 1 and math.log10(output[0,1].item()/output[0,0].item())>15:
                 inverton = pd.concat([inverton,tab.iloc[[i]]])
     c=np.array(posibility)
     inverton.rename(columns={0:"ID",1:"Scaffold",2:"PosA",3:"PosB",4:"PosC",5:"PosD",6:"IrA",7:"Mid",8:"IrB"})
