@@ -63,6 +63,7 @@ The DeepInverton program will generate three output files, including prefix_ir.t
 
  | Column name | Explanation                                                   |
 |-------------|---------------------------------------------------------------|
+ ID    | The sequence name of inverted repeat combined with Scaffold, pos A, pos B, pos C and pos D
  Scaffold    | The sequence name where the inverted repeat is detected
  pos A       | The start coordinate of the first inverted repeat (0-based)
  pos B       | The end coordinate of the first inverted repeat (1-based)
