@@ -56,7 +56,7 @@ def inverton_search(tab_path, inverton_path,model_path,inverton_possibility_path
                 inverton = pd.concat([inverton,tab.iloc[[i]]])
     c=np.array(posibility)
     inverton.rename(columns={0:"ID",1:"Scaffold",2:"PosA",3:"PosB",4:"PosC",5:"PosD",6:"IrA",7:"Mid",8:"IrB"})
-    inverton.to_csv(inverton_path, sep='\t', index=False, header=False)
+    inverton.to_csv(inverton_path, sep='\t', index=False)
     result=pd.DataFrame({'ID':id,"positive":c[:,1],"negative":c[:,0]})
     result_path=inverton_possibility_path
     result.to_csv(result_path,sep='\t', index=False)
